@@ -68,6 +68,13 @@ module PaypalAdaptive
 
       call_api(data, "/AdaptivePayments/Refund")
     end
+    
+    def get_verified_status(data)
+      raise NoDataError unless data
+      
+      response_data = call_api(data, "/AdaptiveAccounts/GetVerifiedStatus")
+      PaypalAdaptive::Response.new(response_data, @env)
+    end
 
     def call_api(data, path)
       #hack fix: JSON.unparse doesn't work in Rails 2.3.5; only {}.to_json does..
